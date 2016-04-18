@@ -15,8 +15,12 @@ import com.nlte.smartcity.R;
  */
 public class GuideAdapter extends PagerAdapter {
     //图片资源合集
-    int[] mImageId = new int[]{R.drawable.guide_1, R.drawable.guide_2, R.drawable.guide_3};
+    private int[] mImageId = new int[]{R.drawable.guide_1, R.drawable.guide_2, R.drawable.guide_3};
     private Context mContext;
+
+    public int[] getImageId() {
+        return mImageId;
+    }
 
     public GuideAdapter(Context context) {
         super();

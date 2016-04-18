@@ -21,14 +21,25 @@
         android:background="@drawable/button_red_normal"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-
         android:layout_marginBottom="70dp"/>
-    <LinearLayout
-        android:id="@+id/linLay_guide_dotContainer"
-        android:orientation="horizontal"
+
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-    </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/linLay_guide_pointContainer"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/iv_guide_redPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/shape_point_red"/>
+    </RelativeLayout>
 
 </RelativeLayout>
