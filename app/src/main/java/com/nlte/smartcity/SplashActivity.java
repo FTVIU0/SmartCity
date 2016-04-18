@@ -70,9 +70,6 @@ public class SplashActivity extends AppCompatActivity {
                     //进入新手引导页面
                     intent.setClass(getApplicationContext(), GuideActivity.class);
                     startActivity(intent);
-                    //第一次打开后，设置ISGUIDESHOW为true
-                    SharePreferenceUtil.putBoolean(
-                            getApplicationContext(), ConstantUtil.ISGUIDESHOW, true);
                 }else {
                     //进入到主页
                     intent.setClass(getApplicationContext(), HomeActivity.class);

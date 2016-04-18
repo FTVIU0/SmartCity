@@ -17,8 +17,11 @@
         android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:text="开始体验"
+        android:onClick="btnStartClick"
         android:textSize="20sp"
-        android:background="@drawable/button_red_normal"
+        android:visibility="gone"
+        android:textColor="@color/txt_guide_start_color"
+        android:background="@drawable/btn_guide_start_background"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="70dp"/>
