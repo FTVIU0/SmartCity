@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.nlte.smartcity.GuideActivity">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_guide_guide"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
+
+    <Button
+        android:id="@+id/btn_guide_start"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:text="开始体验"
+        android:textSize="20sp"
+        android:background="@drawable/button_red_normal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+
+        android:layout_marginBottom="70dp"/>
+    <LinearLayout
+        android:id="@+id/linLay_guide_dotContainer"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </LinearLayout>
+
+
+</RelativeLayout>
