@@ -4,12 +4,12 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <android.support.v4.view.ViewPager
+    <com.nlte.smartcity.view.NoScrollViewPager
         android:id="@+id/vp_home_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-    </android.support.v4.view.ViewPager>
+        android:layout_weight="1" >
+    </com.nlte.smartcity.view.NoScrollViewPager>
     <RadioGroup
         android:background="@android:color/darker_gray"
         android:orientation="horizontal"

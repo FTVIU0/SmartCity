@@ -44,7 +44,7 @@ public class HomeActivity extends SlidingFragmentActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();//开启事务
         //用fragment替换帧布局，参数1：被替换帧布局的id 参数二：要替换的fragment
         transaction.replace(R.id.fraLay_home_menu, new LeftMenuFragment(), TAG_LEFT_MENU);
-        transaction.replace(R.id.fraLay_home_content, new ContentFragment(), TAG_CONTENT);
+        transaction.replace(R.id.fraLay_content, new ContentFragment(), TAG_CONTENT);
         transaction.commit();
     }
 }

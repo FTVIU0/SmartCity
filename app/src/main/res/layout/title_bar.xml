@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@android:color/holo_red_light"
+              android:layout_width="match_parent"
+              android:layout_height="40dp">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="标题栏"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:id="@+id/tv_title"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+    <ImageButton
+        android:id="@+id/ib_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp"
+        android:background="@null"
+        android:src="@drawable/list_menu"/>
+</RelativeLayout>

@@ -40,7 +40,7 @@ public abstract class BaseFragment extends Fragment {
         initData();
     }
     //初始化数据
-    private void initData() {
+    public void initData() {
     }
 
     //初始化布局，子类必须实现
