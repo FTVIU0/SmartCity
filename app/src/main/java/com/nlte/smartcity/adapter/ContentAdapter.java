@@ -31,7 +31,7 @@ public class ContentAdapter extends PagerAdapter {
         //获取当前页面的根布局
         View view = pager.mRrootView;
         container.addView(view);
-        pager.initData();//初始化数据
+//        pager.initData();//初始化数据， 不宜在此处初始化数据，此处默认加载当前页好人下一页，浪费流量和性能
         return view;
     }
 

@@ -11,6 +11,7 @@
         android:layout_weight="1" >
     </com.nlte.smartcity.view.NoScrollViewPager>
     <RadioGroup
+        android:id="@+id/rg_group"
         android:background="@android:color/darker_gray"
         android:orientation="horizontal"
         android:padding="5dp"
