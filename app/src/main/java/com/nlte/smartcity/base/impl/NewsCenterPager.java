@@ -1,10 +1,7 @@
 package com.nlte.smartcity.base.impl;
 
 import android.app.Activity;
-import android.graphics.Color;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
@@ -32,20 +29,14 @@ import java.util.ArrayList;
  */
 public class NewsCenterPager extends BasePager{
     private ArrayList<BaseMenuDetailPager> mMenuDetailPagers;
+    private NewsMenuBean mNewsMenuBean;//网络返回数据
+
     public NewsCenterPager(Activity activity) {
         super(activity);
     }
 
     @Override
     public void initData() {
-        //修改标题
-        tvTitle.setText("News");
-        TextView view = new TextView(mActivity);
-        view.setText("新闻中心");
-        view.setTextColor(Color.RED);
-        view.setGravity(Gravity.CENTER);
-        fraLayContent.addView(view);
-
         //请求服务器数据
         getDataFromServer();
 
@@ -81,8 +72,8 @@ public class NewsCenterPager extends BasePager{
     //Gson解析数据
     private void processData(String result) {
         Gson gson = new Gson();
-        NewsMenuBean newsMenuBean = gson.fromJson(result, NewsMenuBean.class);
-        System.out.println("结果"+ newsMenuBean);
+        mNewsMenuBean = gson.fromJson(result, NewsMenuBean.class);
+        System.out.println("结果"+ mNewsMenuBean);
 
         /*将数据传递给侧边栏
         * 1. 通过NewsCenterPager获取HomeActivity
@@ -90,7 +81,7 @@ public class NewsCenterPager extends BasePager{
         * 3. 将NewsCenterPager的数据传递给LeftMenuFragment*/
         HomeActivity  mainUI = (HomeActivity)mActivity;
         LeftMenuFragment leftMenuFragment = mainUI.getLeftMenuFragment();
-        leftMenuFragment.SetMenuData(newsMenuBean.data);
+        leftMenuFragment.SetMenuData(mNewsMenuBean.data);
 
         //初始化菜单详情页
         mMenuDetailPagers = new ArrayList<BaseMenuDetailPager>();
@@ -98,7 +89,8 @@ public class NewsCenterPager extends BasePager{
         mMenuDetailPagers.add(new PhotoMenuDetailPager(mActivity));
         mMenuDetailPagers.add(new TopicMenuDetailPager(mActivity));
         mMenuDetailPagers.add(new InteractMenuDetailPager(mActivity));
-
+        //默认新闻菜单详情页为默认显示页
+        setCurrentMenuDetailPager(0);
     }
     //设置当前菜单详情页
     public void setCurrentMenuDetailPager(int position){
@@ -110,6 +102,10 @@ public class NewsCenterPager extends BasePager{
 
         //初始化菜单详情页布局
         pager.initData();
+
+        //更新页面的标题
+        String title  = mNewsMenuBean.data.get(position).title;
+        tvTitle.setText(title);
     }
 
 }

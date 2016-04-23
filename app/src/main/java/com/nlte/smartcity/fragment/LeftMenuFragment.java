@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.nlte.smartcity.HomeActivity;
 import com.nlte.smartcity.R;
 import com.nlte.smartcity.adapter.LeftMenuAdapter;
@@ -30,6 +31,7 @@ public class LeftMenuFragment extends BaseFragment {
     //设置侧边栏数据, 供NewsCenterPager调用
     public void SetMenuData(ArrayList<NewsMenuBean.NewsMenuData> data){
         mLeftMenuAdapter = new LeftMenuAdapter(mActivity, data);
+        mLeftMenuAdapter.mCurrentItem = 0;//当前位置默认是第一个页面
         lvMenu.setAdapter(mLeftMenuAdapter);
         lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -37,9 +39,18 @@ public class LeftMenuFragment extends BaseFragment {
                 mLeftMenuAdapter.mCurrentItem = position;
                 mLeftMenuAdapter.notifyDataSetChanged();//刷新ListView
                 setCurrentDetailPager(position);
+                //点击后收起侧边栏
+                toggle();
             }
         });
     }
+    /*点击后收起侧边栏*/
+    private void toggle() {
+        HomeActivity activity = (HomeActivity) mActivity;
+        SlidingMenu slidingMenu = activity.getSlidingMenu();
+        slidingMenu.toggle();//如果侧边栏为打开状态则关闭侧边栏；否则打开
+    }
+
     /*设置当前菜单详情页
     * 1. 先通过LeftMentFragment获取HomeActivity
     * 2. 通过HomeActivity获取ContentFragment
