@@ -47,4 +47,10 @@ public class HomeActivity extends SlidingFragmentActivity {
         transaction.replace(R.id.fraLay_content, new ContentFragment(), TAG_CONTENT);
         transaction.commit();
     }
+
+    //获取LeftMenuFragment对象
+    public LeftMenuFragment getLeftMenuFragment(){
+        FragmentManager fm = getFragmentManager();//fragment管理器
+        return (LeftMenuFragment)fm.findFragmentByTag(TAG_LEFT_MENU);
+    }
 }

@@ -11,16 +11,26 @@ import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.nlte.smartcity.HomeActivity;
+import com.nlte.smartcity.base.BaseMenuDetailPager;
 import com.nlte.smartcity.base.BasePager;
+import com.nlte.smartcity.base.impl.menu.InteractMenuDetailPager;
+import com.nlte.smartcity.base.impl.menu.NewsMenuDetailPager;
+import com.nlte.smartcity.base.impl.menu.PhotoMenuDetailPager;
+import com.nlte.smartcity.base.impl.menu.TopicMenuDetailPager;
 import com.nlte.smartcity.domain.NewsMenuBean;
+import com.nlte.smartcity.fragment.LeftMenuFragment;
 import com.nlte.smartcity.global.GlobalConstants;
 import com.nlte.smartcity.utils.ToastUtil;
+
+import java.util.ArrayList;
 
 /**首页
  * Created by Nlte
  * 2016/4/22 0022.
  */
 public class NewsCenterPager extends BasePager{
+    private ArrayList<BaseMenuDetailPager> mMenuDetailPagers;
     public NewsCenterPager(Activity activity) {
         super(activity);
     }
@@ -71,7 +81,23 @@ public class NewsCenterPager extends BasePager{
     private void processData(String result) {
         Gson gson = new Gson();
         NewsMenuBean newsMenuBean = gson.fromJson(result, NewsMenuBean.class);
-        System.out.println("结果");
+        System.out.println("结果"+ newsMenuBean);
+
+        /*将数据传递给侧边栏
+        * 1. 通过NewsCenterPager获取HomeActivity
+        * 2. 通过HomeActivity获取LeftMenuFragment
+        * 3. 将NewsCenterPager的数据传递给LeftMenuFragment*/
+        HomeActivity  mainUI = (HomeActivity)mActivity;
+        LeftMenuFragment leftMenuFragment = mainUI.getLeftMenuFragment();
+        leftMenuFragment.SetMenuData(newsMenuBean.data);
+
+        //初始化菜单详情页
+        mMenuDetailPagers = new ArrayList<BaseMenuDetailPager>();
+        mMenuDetailPagers.add(new NewsMenuDetailPager(mActivity));
+        mMenuDetailPagers.add(new PhotoMenuDetailPager(mActivity));
+        mMenuDetailPagers.add(new TopicMenuDetailPager(mActivity));
+        mMenuDetailPagers.add(new InteractMenuDetailPager(mActivity));
+
     }
 
 }

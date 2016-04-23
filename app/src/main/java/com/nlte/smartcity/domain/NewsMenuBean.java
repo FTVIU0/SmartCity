@@ -16,6 +16,15 @@ public class NewsMenuBean {
     public ArrayList<String> extend;
     public ArrayList<NewsMenuData> data;
 
+    @Override
+    public String toString() {
+        return "NewsMenuBean{" +
+                "retcode=" + retcode +
+                ", extend=" + extend +
+                ", data=" + data +
+                '}';
+    }
+
     /*侧边栏对象*/
     public class  NewsMenuData{
         public String id;
@@ -23,6 +32,13 @@ public class NewsMenuBean {
         public int type;
         public ArrayList<NewsTabData> children;
 
+        @Override
+        public String toString() {
+            return "NewsMenuData{" +
+                    "title='" + title + '\'' +
+                    ", children=" + children +
+                    '}';
+        }
     }
     /*Tab对象， 页签对象*/
     public class NewsTabData{
@@ -30,6 +46,13 @@ public class NewsMenuBean {
         public String title;
         public String url;
         public int type;
+
+        @Override
+        public String toString() {
+            return "NewsTabData{" +
+                    "title='" + title + '\'' +
+                    '}';
+        }
     }
 
 }
