@@ -1,6 +1,7 @@
 package com.nlte.smartcity.base.impl;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -19,6 +20,7 @@ import com.nlte.smartcity.base.impl.menu.TopicMenuDetailPager;
 import com.nlte.smartcity.domain.NewsMenuBean;
 import com.nlte.smartcity.fragment.LeftMenuFragment;
 import com.nlte.smartcity.global.GlobalConstants;
+import com.nlte.smartcity.utils.CacheUtils;
 import com.nlte.smartcity.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -38,6 +40,11 @@ public class NewsCenterPager extends BasePager{
     @Override
     public void initData() {
         //请求服务器数据
+        String cache = CacheUtils.getCache(mActivity, GlobalConstants.CATEGORY_URL);
+        if (!TextUtils.isEmpty(cache)){
+            processData(cache);
+        }
+        //请求服务器数据,读了缓存之后，仍然请求网络，保证信息为最新
         getDataFromServer();
 
     }
@@ -57,7 +64,7 @@ public class NewsCenterPager extends BasePager{
                     @Override
                     public void onSuccess(ResponseInfo<String> responseInfo) {
                         String result = responseInfo.result;//服务器返回的数据
-                        System.out.println("请求结果 "+ result);
+                        CacheUtils.setCache(mActivity, GlobalConstants.CATEGORY_URL, result);
                         //解析数据
                         processData(result);
                     }
@@ -86,8 +93,8 @@ public class NewsCenterPager extends BasePager{
         //初始化菜单详情页
         mMenuDetailPagers = new ArrayList<BaseMenuDetailPager>();
         mMenuDetailPagers.add(new NewsMenuDetailPager(mActivity));
-        mMenuDetailPagers.add(new PhotoMenuDetailPager(mActivity));
         mMenuDetailPagers.add(new TopicMenuDetailPager(mActivity));
+        mMenuDetailPagers. add(new PhotoMenuDetailPager(mActivity));
         mMenuDetailPagers.add(new InteractMenuDetailPager(mActivity));
         //默认新闻菜单详情页为默认显示页
         setCurrentMenuDetailPager(0);
