@@ -3,6 +3,7 @@ package com.nlte.smartcity.base.impl;
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -98,6 +99,17 @@ public class NewsCenterPager extends BasePager{
         mMenuDetailPagers.add(new TopicMenuDetailPager(mActivity));
         mMenuDetailPagers.add(new InteractMenuDetailPager(mActivity));
 
+    }
+    //设置当前菜单详情页
+    public void setCurrentMenuDetailPager(int position){
+        //获取当前选择的菜单详情页
+        BaseMenuDetailPager pager = mMenuDetailPagers.get(position);
+        View view = pager.rootView;
+        fraLayContent.removeAllViews();//清除之前所有的布局
+        fraLayContent.addView(view);//给新闻中心的帧布局添加菜单详情页布局
+
+        //初始化菜单详情页布局
+        pager.initData();
     }
 
 }

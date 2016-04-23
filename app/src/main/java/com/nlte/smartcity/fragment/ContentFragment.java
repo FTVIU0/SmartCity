@@ -125,5 +125,9 @@ public class ContentFragment extends BaseFragment {
         ContentAdapter adapter = new ContentAdapter(mPagers);
         mViewPager.setAdapter(adapter);
     }
+    //获取新闻中心页面
+    public NewsCenterPager getNewsCenterPager(){
+        return (NewsCenterPager) mPagers.get(1);
+    }
 
 }

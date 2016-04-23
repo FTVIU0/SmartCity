@@ -30,7 +30,7 @@ public class HomeActivity extends SlidingFragmentActivity {
 
         SlidingMenu slidingMenu = getSlidingMenu();
         //设置屏幕预留宽度
-        slidingMenu.setBehindOffset(300);
+        slidingMenu.setBehindOffset(200);
 
         //初始化Fragment
         initFragment();
@@ -52,5 +52,10 @@ public class HomeActivity extends SlidingFragmentActivity {
     public LeftMenuFragment getLeftMenuFragment(){
         FragmentManager fm = getFragmentManager();//fragment管理器
         return (LeftMenuFragment)fm.findFragmentByTag(TAG_LEFT_MENU);
+    }
+    //获取ContentFragment对象
+    public ContentFragment getContentFragment(){
+        FragmentManager fm = getFragmentManager();//fragment管理器
+        return (ContentFragment)fm.findFragmentByTag(TAG_CONTENT);
     }
 }
