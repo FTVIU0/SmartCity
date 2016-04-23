@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.nlte.smartcity">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/earth"
@@ -12,14 +14,20 @@
             android:name=".SplashActivity"
             android:theme="@style/ActivityTheme.Full">
 
+            <!-- 去除ActionBar和顶部状态栏
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>-->
+        </activity>
+        <activity android:name=".HomeActivity">
             <!-- 去除ActionBar和顶部状态栏 -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".HomeActivity">
         </activity>
         <activity android:name=".GuideActivity"
                   android:theme="@style/Theme.AppCompat.NoActionBar">
