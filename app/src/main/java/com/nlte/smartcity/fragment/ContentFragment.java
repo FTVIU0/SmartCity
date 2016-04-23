@@ -4,8 +4,10 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.RadioGroup;
 
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.nlte.smartcity.HomeActivity;
 import com.nlte.smartcity.R;
 import com.nlte.smartcity.adapter.ContentAdapter;
 import com.nlte.smartcity.base.BasePager;
@@ -38,20 +40,30 @@ public class ContentFragment extends BaseFragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
-                    case R.id.rb_home:
+                    case R.id.rb_home://首页
                         //禁止切换时的动画
                         mViewPager.setCurrentItem(0, false);
+                        //侧边栏不可用
+                        setSlidingMenuEnable(false);
                         break;
-                    case R.id.rb_news:
+                    case R.id.rb_news://新闻中心
+                        //侧边栏不可用
+                        setSlidingMenuEnable(true);
                         mViewPager.setCurrentItem(1, false);
                         break;
-                    case R.id.rb_smart:
+                    case R.id.rb_smart://智慧服务
+                        //侧边栏不可用
+                        setSlidingMenuEnable(true);
                         mViewPager.setCurrentItem(2, false);
                         break;
-                    case R.id.rb_gov:
+                    case R.id.rb_gov://政务
+                        //侧边栏不可用
+                        setSlidingMenuEnable(true);
                         mViewPager.setCurrentItem(3, false);
                         break;
-                    case R.id.rb_setting:
+                    case R.id.rb_setting://设置
+                        //侧边栏不可用
+                        setSlidingMenuEnable(false);
                         mViewPager.setCurrentItem(4, false);
                         break;
                     default:
@@ -59,6 +71,7 @@ public class ContentFragment extends BaseFragment {
                 }
             }
         });
+        //ViewPager的监听事件
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -78,6 +91,21 @@ public class ContentFragment extends BaseFragment {
 
         return view;
     }
+    /**
+     * 功能描述：设置侧边栏可用或不可用
+     * @author NLTE
+     * @time 2016/4/23 0023 10:00
+     */
+    private void setSlidingMenuEnable(boolean b) {
+        HomeActivity menuUI = (HomeActivity) mActivity;
+        SlidingMenu slidingMenu = menuUI.getSlidingMenu();
+        if (b){
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        }else {
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+        }
+    }
+
     //初始化数据
     @Override
     public void initData() {
@@ -91,6 +119,8 @@ public class ContentFragment extends BaseFragment {
 
         //初始化首页数据
         mPagers.get(0).initData();
+        //侧边栏不可用
+        setSlidingMenuEnable(false);
         //设置适配器
         ContentAdapter adapter = new ContentAdapter(mPagers);
         mViewPager.setAdapter(adapter);

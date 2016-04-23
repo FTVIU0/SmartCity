@@ -3,6 +3,7 @@ package com.nlte.smartcity.base.impl;
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.nlte.smartcity.base.BasePager;
@@ -18,6 +19,8 @@ public class SettingPager extends BasePager{
 
     @Override
     public void initData() {
+        //隐藏菜单按钮
+        ibMenu.setVisibility(View.GONE);
         //修改标题
         tvTitle.setText("Setting");
         TextView view = new TextView(mActivity);

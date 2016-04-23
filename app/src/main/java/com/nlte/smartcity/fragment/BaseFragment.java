@@ -20,7 +20,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivity = getActivity();//获取Fragment所依赖的Activity对象
+        mActivity = getActivity();//获取Fragment所依赖的Activity对象, 即是HomeActivity
     }
 
     //Fragment布局初始化
