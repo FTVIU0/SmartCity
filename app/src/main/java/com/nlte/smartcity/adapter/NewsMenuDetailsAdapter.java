@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nlte.smartcity.base.impl.TabdetailPager;
+import com.nlte.smartcity.domain.NewsMenuBean;
 
 import java.util.ArrayList;
 
@@ -17,10 +18,12 @@ import java.util.ArrayList;
 
 
 public class NewsMenuDetailsAdapter extends PagerAdapter{
-    private ArrayList<TabdetailPager> pagers;
+    private ArrayList<TabdetailPager> pagers;//页签详情页集合
+    private ArrayList<NewsMenuBean.NewsTabData> mTabList;//页签网络数据
 
-    public NewsMenuDetailsAdapter(ArrayList<TabdetailPager> pagers) {
+    public NewsMenuDetailsAdapter(ArrayList<NewsMenuBean.NewsTabData> tabList, ArrayList<TabdetailPager> pagers) {
         this.pagers = pagers;
+        mTabList = tabList;
     }
 
     @Override
@@ -45,5 +48,10 @@ public class NewsMenuDetailsAdapter extends PagerAdapter{
     @Override
     public int getCount() {
         return pagers.size();
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mTabList.get(position).title;
     }
 }

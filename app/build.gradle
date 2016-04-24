@@ -25,4 +25,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile project(':slidingmenulibrary')
     compile project(':xutilslibrary')
+    compile project(':viewpagerindicatorlibrary')
 }

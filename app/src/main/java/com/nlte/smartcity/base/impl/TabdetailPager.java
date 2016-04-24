@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.nlte.smartcity.base.BaseMenuDetailPager;
+import com.nlte.smartcity.domain.NewsMenuBean;
 
 /**
  * 描述：页签详情页
@@ -15,16 +16,26 @@ import com.nlte.smartcity.base.BaseMenuDetailPager;
  * @time 2016/4/24 0024 15:31
  */
 public class TabdetailPager extends BaseMenuDetailPager{
-    public TabdetailPager(Activity activity) {
+    private NewsMenuBean.NewsTabData mNewsTabData;//页签网络数据对象
+    private TextView mView;
+
+    public TabdetailPager(Activity activity, NewsMenuBean.NewsTabData newsTabData) {
         super(activity);
+        this.mNewsTabData = newsTabData;
     }
+
 
     @Override
     public View initView() {
-        TextView view = new TextView(mActivity);
-        view.setText("页签详情页");
-        view.setTextColor(Color.RED);
-        view.setGravity(Gravity.CENTER);
-        return view;
+        mView = new TextView(mActivity);
+        mView.setText("页签详情页");
+        mView.setTextColor(Color.RED);
+        mView.setGravity(Gravity.CENTER);
+        return mView;
+    }
+
+    @Override
+    public void initData() {
+        mView.setText(mNewsTabData.title);
     }
 }

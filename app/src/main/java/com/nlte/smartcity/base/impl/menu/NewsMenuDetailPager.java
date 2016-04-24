@@ -11,16 +11,29 @@ import com.nlte.smartcity.adapter.NewsMenuDetailsAdapter;
 import com.nlte.smartcity.base.BaseMenuDetailPager;
 import com.nlte.smartcity.base.impl.TabdetailPager;
 import com.nlte.smartcity.domain.NewsMenuBean;
+import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.ArrayList;
 
 /**菜单详情页-新闻
+ *
+ * ViewPagerIndicator使用流程：
+ *  1. 引入ViewPagerIndicator包
+ *  2. 在布局文件中声明自定义控件
+ *  3. 仿照sample代码初始化自定义控件,和ViewPager绑定
+ *  4. 重写pagerAdapter的getPagerTitle（）方法，返回页面的标题
+ *  5. 给HomeActivity加主题样式
+ *  6. 基于样式进行修改
+ *
  * Created by Nlte
  * 2016/4/23 0023.
  */
 public class NewsMenuDetailPager extends BaseMenuDetailPager{
     @ViewInject(R.id.vp_news_details)
     private ViewPager mVPNewsMEnuDetails;
+    @ViewInject(R.id.indicator)
+    private TabPageIndicator mIndicator;//Tab指示器
+
     private ArrayList<NewsMenuBean.NewsTabData> mTabList;//页签网络数据
     private ArrayList<TabdetailPager> mPagers;//页签详情页集合
 
@@ -28,12 +41,6 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager{
     public View initView() {
         View view = View.inflate(mActivity, R.layout.pager_news_menu_details, null);
         ViewUtils.inject(this, view);
-        /*//修改标题
-        TextView view = new TextView(mActivity);
-        view.setText("菜单详情页-新闻");
-        view.setTextColor(Color.RED);
-        view.setGravity(Gravity.CENTER);
-        System.out.println("initView");*/
         return view;
     }
 
@@ -44,41 +51,16 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager{
         initDate();
     }
 
-
     public void initDate(){
         mPagers = new ArrayList<TabdetailPager>();
         //初始化12个页签对象数据
         for (int i = 0; i < mTabList.size(); i++){
-            TabdetailPager pager = new TabdetailPager(mActivity);
+            TabdetailPager pager = new TabdetailPager(mActivity, mTabList.get(i));
             mPagers.add(pager);
         }
-        NewsMenuDetailsAdapter adapter = new NewsMenuDetailsAdapter(mPagers);
+        NewsMenuDetailsAdapter adapter = new NewsMenuDetailsAdapter(mTabList, mPagers);
         mVPNewsMEnuDetails.setAdapter(adapter);
+        //将ViewPager和指针绑定在一起，绑定之前必须保证ViewPager已经设置完成
+        mIndicator.setViewPager(mVPNewsMEnuDetails);
     }
-
-    /*class NewsMenuDetailsAdapter extends PagerAdapter {
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            TabdetailPager pager = mPagers.get(position);
-            View view = pager.rootView;
-            //pager.initData();//初始化数据
-            container.addView(view);
-            return view;
-        }
-
-        @Override
-        public int getCount() {
-            return mPagers.size();
-        }
-    }*/
 }
