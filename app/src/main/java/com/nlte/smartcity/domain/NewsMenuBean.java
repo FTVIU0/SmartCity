@@ -18,11 +18,7 @@ public class NewsMenuBean {
 
     @Override
     public String toString() {
-        return "NewsMenuBean{" +
-                "retcode=" + retcode +
-                ", extend=" + extend +
-                ", data=" + data +
-                '}';
+        return "NewsMenuBean [data=" + data + "]";
     }
 
     /*侧边栏对象*/
@@ -34,10 +30,8 @@ public class NewsMenuBean {
 
         @Override
         public String toString() {
-            return "NewsMenuData{" +
-                    "title='" + title + '\'' +
-                    ", children=" + children +
-                    '}';
+            return "NewsMenuData [title=" + title + ", children=" + children
+                    + "]";
         }
     }
     /*Tab对象， 页签对象*/
@@ -49,9 +43,7 @@ public class NewsMenuBean {
 
         @Override
         public String toString() {
-            return "NewsTabData{" +
-                    "title='" + title + '\'' +
-                    '}';
+            return "NewsTabData [title=" + title + "]";
         }
     }
 

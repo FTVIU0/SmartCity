@@ -100,7 +100,7 @@ public class ContentFragment extends BaseFragment {
         HomeActivity menuUI = (HomeActivity) mActivity;
         SlidingMenu slidingMenu = menuUI.getSlidingMenu();
         if (b){
-            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         }else {
             slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
         }
