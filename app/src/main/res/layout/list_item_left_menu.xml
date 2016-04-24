@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:gravity="center"
+              android:layout_marginTop="150dp"
+              android:layout_width="match_parent"
+              android:layout_height="80dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="新闻"
+        android:padding="25dp"
+        android:drawableLeft="@drawable/btn_menu_arrow_selector"
+        android:drawablePadding="12dp"
+        android:textColor="@color/txt_menu_selector"
+        android:textSize="22sp"
+        android:id="@+id/tv_menu"/>
+</LinearLayout>
