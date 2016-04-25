@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nlte.smartcity.R;
 import com.nlte.smartcity.adapter.NewsMenuDetailsAdapter;
 import com.nlte.smartcity.base.BaseMenuDetailPager;
@@ -37,6 +38,7 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager{
     @ViewInject(R.id.indicator)
     private TabPageIndicator mIndicator;//Tab指示器
 
+
     private ArrayList<NewsMenuBean.NewsTabData> mTabList;//页签网络数据
     private ArrayList<TabdetailPager> mPagers;//页签详情页集合
 
@@ -66,5 +68,12 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager{
         //将ViewPager和指针绑定在一起，绑定之前必须保证ViewPager已经设置完成
         mIndicator.setViewPager(mVPNewsMEnuDetails);
         //当Indicator和ViewPager绑定时，页面切换监听必须设置给Indicator
+    }
+
+    @OnClick(R.id.btn_next_pager)
+    public void nextPager(View view){
+        //切换到下一个页面
+        int currentItem = mVPNewsMEnuDetails.getCurrentItem();
+        mVPNewsMEnuDetails.setCurrentItem(++currentItem);
     }
 }
