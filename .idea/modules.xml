@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/SmartCity.iml" filepath="$PROJECT_DIR$/SmartCity.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/slidingmenulibrary/slidingmenulibrary.iml" filepath="$PROJECT_DIR$/slidingmenulibrary/slidingmenulibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/viewpagerindicatorlibrary/library.iml" filepath="$PROJECT_DIR$/viewpagerindicatorlibrary/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/viewpagerindicatorlibrary/viewpagerindicatorlibrary.iml" filepath="$PROJECT_DIR$/viewpagerindicatorlibrary/viewpagerindicatorlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/xutilslibrary/xutilslibrary.iml" filepath="$PROJECT_DIR$/xutilslibrary/xutilslibrary.iml" />
     </modules>
   </component>

@@ -24,6 +24,9 @@ import java.util.ArrayList;
  *  4. 重写pagerAdapter的getPagerTitle（）方法，返回页面的标题
  *  5. 给HomeActivity加主题样式
  *  6. 基于样式进行修改
+ *  7. 事件分发流程：  dispathTouchEvent -> onIntereceptEvent -> OnTouchEvent
+ *     事件处理：重写TabPagerIndicator的dispatchTouchEvent方法，
+ *              请求父控件不要拦截当前控件的事件
  *
  * Created by Nlte
  * 2016/4/23 0023.
@@ -62,5 +65,6 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager{
         mVPNewsMEnuDetails.setAdapter(adapter);
         //将ViewPager和指针绑定在一起，绑定之前必须保证ViewPager已经设置完成
         mIndicator.setViewPager(mVPNewsMEnuDetails);
+        //当Indicator和ViewPager绑定时，页面切换监听必须设置给Indicator
     }
 }

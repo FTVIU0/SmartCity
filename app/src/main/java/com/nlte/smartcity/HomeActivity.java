@@ -30,7 +30,7 @@ public class HomeActivity extends SlidingFragmentActivity {
 
         SlidingMenu slidingMenu = getSlidingMenu();
         //设置屏幕预留宽度
-        slidingMenu.setBehindOffset(200);
+        slidingMenu.setBehindOffset(400);
 
         //初始化Fragment
         initFragment();
