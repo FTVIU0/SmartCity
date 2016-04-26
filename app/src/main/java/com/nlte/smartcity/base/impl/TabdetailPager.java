@@ -1,6 +1,7 @@
 package com.nlte.smartcity.base.impl;
 
 import android.app.Activity;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
@@ -32,13 +33,15 @@ import java.util.ArrayList;
  * @author NLTE
  * @time 2016/4/24 0024 15:31
  */
-public class TabdetailPager extends BaseMenuDetailPager{
+public class TabdetailPager extends BaseMenuDetailPager {
     private NewsMenuBean.NewsTabData mNewsTabData;//页签网络数据对象
     private TextView mView;
     @ViewInject(R.id.vp_top_news)
     private HorizonScrollViewPager mVpTopNews;
     @ViewInject(R.id.lv_news)
     private ListView mLvNews;
+    @ViewInject(R.id.tv_title)
+    private TextView tvTitle;//头条新闻标题
     private final String mUrl;//页签网络数据URL
     private ArrayList<NewsBean.TopNews> mTopnewsList;//头条新闻数据集合
 
@@ -49,14 +52,8 @@ public class TabdetailPager extends BaseMenuDetailPager{
         //initData();
     }
 
-
     @Override
     public View initView() {
-        /*mView = new TextView(mActivity);
-        mView.setText("页签详情页");
-        mView.setTextColor(Color.RED);
-        mView.setGravity(Gravity.CENTER);*/
-
         View view = View.inflate(mActivity, R.layout.pager_tab_detail, null);
         ViewUtils.inject(this, view);
         return view;
@@ -103,6 +100,27 @@ public class TabdetailPager extends BaseMenuDetailPager{
         mTopnewsList = newsBean.data.topnews;
         if (mTopnewsList!=null){
             mVpTopNews.setAdapter(new TopNewsAdapter(mActivity, mTopnewsList));
+            //初始化第一页头条新闻标题
+            tvTitle.setText(mTopnewsList.get(0).title);
+            //ViewPager监听事件
+            mVpTopNews.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    //手动更新头条新闻标题
+                    NewsBean.TopNews topNews = mTopnewsList.get(position);
+                    tvTitle.setText(topNews.title);
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
         }
     }
 }
