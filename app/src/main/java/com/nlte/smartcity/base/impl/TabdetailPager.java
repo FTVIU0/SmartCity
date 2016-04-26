@@ -1,7 +1,7 @@
 package com.nlte.smartcity.base.impl;
 
 import android.app.Activity;
-import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,11 +15,16 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nlte.smartcity.R;
+import com.nlte.smartcity.adapter.TopNewsAdapter;
 import com.nlte.smartcity.base.BaseMenuDetailPager;
 import com.nlte.smartcity.domain.NewsBean;
 import com.nlte.smartcity.domain.NewsMenuBean;
 import com.nlte.smartcity.global.GlobalConstants;
+import com.nlte.smartcity.utils.CacheUtils;
 import com.nlte.smartcity.utils.ToastUtil;
+import com.nlte.smartcity.view.HorizonScrollViewPager;
+
+import java.util.ArrayList;
 
 /**
  * 描述：页签详情页
@@ -31,10 +36,11 @@ public class TabdetailPager extends BaseMenuDetailPager{
     private NewsMenuBean.NewsTabData mNewsTabData;//页签网络数据对象
     private TextView mView;
     @ViewInject(R.id.vp_top_news)
-    private ViewPager mVpTopNews;
+    private HorizonScrollViewPager mVpTopNews;
     @ViewInject(R.id.lv_news)
     private ListView mLvNews;
     private final String mUrl;//页签网络数据URL
+    private ArrayList<NewsBean.TopNews> mTopnewsList;//头条新闻数据集合
 
     public TabdetailPager(Activity activity, NewsMenuBean.NewsTabData newsTabData) {
         super(activity);
@@ -60,6 +66,11 @@ public class TabdetailPager extends BaseMenuDetailPager{
     public void initData() {
         //从服务器获取数据
         //mView.setText(mNewsTabData.title);
+        //读缓存
+        String cache = CacheUtils.getCache(mActivity, mUrl);
+        if (!TextUtils.isEmpty(cache)){
+            processData(cache);
+        }
         getDataFromService();
     }
 
@@ -71,6 +82,8 @@ public class TabdetailPager extends BaseMenuDetailPager{
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 String result = responseInfo.result;//服务器返回的数据
+                //写缓存
+                CacheUtils.setCache(mActivity, mUrl, result);
                 //解析数据
                 processData(result);
             }
@@ -87,6 +100,9 @@ public class TabdetailPager extends BaseMenuDetailPager{
     private void processData(String result) {
         Gson gson = new Gson();
         NewsBean newsBean = gson.fromJson(result, NewsBean.class);
-        System.out.println("NewsBean结果"+newsBean);
+        mTopnewsList = newsBean.data.topnews;
+        if (mTopnewsList!=null){
+            mVpTopNews.setAdapter(new TopNewsAdapter(mActivity, mTopnewsList));
+        }
     }
 }

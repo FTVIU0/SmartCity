@@ -11,7 +11,8 @@ import java.util.ArrayList;
 public class NewsBean {
     public int retcode;
     public NewsData data;
-    public class NewsData{
+
+    public class NewsData {
         public String more;
         public String title;
         public ArrayList<TopNews> topnews;
@@ -27,8 +28,9 @@ public class NewsBean {
                     '}';
         }
     }
+
     //头条新闻
-    public class TopNews{
+    public class TopNews {
         public String id;
         public String pubdate;
         public String title;
@@ -46,8 +48,9 @@ public class NewsBean {
                     '}';
         }
     }
+
     //普通新闻
-    public class News{
+    public class News {
         public String id;
         public String pubdate;
         public String title;
