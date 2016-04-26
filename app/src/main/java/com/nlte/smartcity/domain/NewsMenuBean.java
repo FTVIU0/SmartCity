@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**网络分类信息的封装
  * 使用Gson解析Json注意事项：
- *  1. 逢{}创建对象，逢[]创建ArrayList<>
+ *  1. 逢 {} 创建对象，逢 [] 创建ArrayList<>
  *  2. 类中所有字段的命名要和网络返回的字段一致（名字和类型要一致）
  *  3. 不需要的字段可以不解析或者不声明
  * Created by Nlte
