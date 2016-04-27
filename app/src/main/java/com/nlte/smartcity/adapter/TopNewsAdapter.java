@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.lidroid.xutils.BitmapUtils;
+import com.nlte.smartcity.R;
 import com.nlte.smartcity.domain.NewsBean;
 
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class TopNewsAdapter extends PagerAdapter{
         /*参数一：要设置图片的容器
         * 参数二：图片的下载链接*/
         mBitmapUtils.display(view, mTopnewsList.get(position).topimage);
+        //加载时的默认图片
+        mBitmapUtils.configDefaultLoadingImage(R.drawable.topnews_item_default);
         container.addView(view);
         return view;
     }

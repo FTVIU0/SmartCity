@@ -62,6 +62,8 @@ public class NewsAdapter extends BaseAdapter{
 
         NewsBean.News news = (NewsBean.News) getItem(position);
         mBitmapUtils.display(holder.ivIcon, news.listimage);
+        //设置默认加载图片
+        mBitmapUtils.configDefaultLoadingImage(R.drawable.news_pic_default);
         holder.tvTitle.setText(news.title);
         holder.tvTime.setText(news.pubdate);
         return convertView;
