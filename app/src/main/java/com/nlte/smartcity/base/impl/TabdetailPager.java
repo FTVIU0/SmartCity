@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -25,6 +24,7 @@ import com.nlte.smartcity.global.GlobalConstants;
 import com.nlte.smartcity.utils.CacheUtils;
 import com.nlte.smartcity.utils.ToastUtil;
 import com.nlte.smartcity.view.HorizonScrollViewPager;
+import com.nlte.smartcity.view.RefreshListView;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class TabdetailPager extends BaseMenuDetailPager {
     @ViewInject(R.id.vp_top_news)
     private HorizonScrollViewPager mVpTopNews;
     @ViewInject(R.id.lv_news)
-    private ListView mLvNews;
+    private RefreshListView mLvNews;
     @ViewInject(R.id.tv_title)
     private TextView tvTitle;//头条新闻标题
     @ViewInject(R.id.indicator)

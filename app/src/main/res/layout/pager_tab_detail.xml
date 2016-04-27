@@ -4,11 +4,11 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <!--cacheColorHint:liatview滑动过程中的背景-->
-    <ListView
+    <com.nlte.smartcity.view.RefreshListView
         android:id="@+id/lv_news"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:cacheColorHint="@android:color/white"
         android:layout_weight="1">
-    </ListView>
+    </com.nlte.smartcity.view.RefreshListView>
 </LinearLayout>
