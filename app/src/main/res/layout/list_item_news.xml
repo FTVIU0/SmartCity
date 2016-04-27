@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+    android:padding="6dp">
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:id="@+id/iv_icon"
+        android:layout_margin="5dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image_demo"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="JSON中存在这样的制表符,看起来和空格一样,但是就是因为它的存在校验不通过。去掉就能过了。"
+        android:id="@+id/tv_title"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:layout_marginLeft="5dp"
+        android:layout_alignTop="@id/iv_icon"
+        android:layout_toRightOf="@+id/iv_icon"
+        android:layout_toEndOf="@+id/iv_icon"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2016.04.27 15:30"
+        android:id="@+id/ttv_time"
+        android:layout_alignBottom="@id/iv_icon"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/iv_icon"
+        android:layout_toEndOf="@+id/iv_icon"/>
+
+</RelativeLayout>

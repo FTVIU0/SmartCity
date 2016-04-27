@@ -16,6 +16,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nlte.smartcity.R;
+import com.nlte.smartcity.adapter.NewsAdapter;
 import com.nlte.smartcity.adapter.TopNewsAdapter;
 import com.nlte.smartcity.base.BaseMenuDetailPager;
 import com.nlte.smartcity.domain.NewsBean;
@@ -47,6 +48,8 @@ public class TabdetailPager extends BaseMenuDetailPager {
     private CirclePageIndicator mCirclePageIndicator;
     private final String mUrl;//页签网络数据URL
     private ArrayList<NewsBean.TopNews> mTopnewsList;//头条新闻数据集合
+    private ArrayList<NewsBean.News> mNewsList;//普通新闻数据集合
+    private NewsAdapter mNewsAdapter;
 
     public TabdetailPager(Activity activity, NewsMenuBean.NewsTabData newsTabData) {
         super(activity);
@@ -134,6 +137,12 @@ public class TabdetailPager extends BaseMenuDetailPager {
 
                 }
             });
+
+            mNewsList = newsBean.data.news;
+            if (mNewsList != null){
+                mNewsAdapter = new NewsAdapter(mActivity, mNewsList);
+                mLvNews.setAdapter(mNewsAdapter);
+            }
         }
     }
 }
