@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
@@ -15,9 +16,10 @@
         </com.nlte.smartcity.view.HorizonScrollViewPager>
         <RelativeLayout
             android:layout_gravity="bottom"
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#2000">
+            android:background="#3000">
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
@@ -27,6 +29,18 @@
                 android:layout_marginLeft="10dp"
                 android:padding="5dp"
                 android:text="中国"/>
+            <!--fillColor:选中颜色  pageColor：默认颜色 strokeWidth：边框宽度-->
+            <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/indicator"
+                android:padding="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                app:radius="3dp"
+                app:fillColor="@android:color/holo_red_light"
+                app:pageColor="#cccccc"
+                app:strokeWidth="0dp"/>
         </RelativeLayout>
     </FrameLayout>
 

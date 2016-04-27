@@ -24,6 +24,7 @@ import com.nlte.smartcity.global.GlobalConstants;
 import com.nlte.smartcity.utils.CacheUtils;
 import com.nlte.smartcity.utils.ToastUtil;
 import com.nlte.smartcity.view.HorizonScrollViewPager;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,8 @@ public class TabdetailPager extends BaseMenuDetailPager {
     private ListView mLvNews;
     @ViewInject(R.id.tv_title)
     private TextView tvTitle;//头条新闻标题
+    @ViewInject(R.id.indicator)
+    private CirclePageIndicator mCirclePageIndicator;
     private final String mUrl;//页签网络数据URL
     private ArrayList<NewsBean.TopNews> mTopnewsList;//头条新闻数据集合
 
@@ -98,12 +101,22 @@ public class TabdetailPager extends BaseMenuDetailPager {
         Gson gson = new Gson();
         NewsBean newsBean = gson.fromJson(result, NewsBean.class);
         mTopnewsList = newsBean.data.topnews;
+
         if (mTopnewsList!=null){
             mVpTopNews.setAdapter(new TopNewsAdapter(mActivity, mTopnewsList));
+
+            //添加小圆点指示器
+            mCirclePageIndicator.setViewPager(mVpTopNews);
+            mCirclePageIndicator.setSnap(true);
+
             //初始化第一页头条新闻标题
             tvTitle.setText(mTopnewsList.get(0).title);
+
+            //让圆点设置到第一个页面的位置（indicator在页面销毁后会默认保存上一次选择的状态）
+            mCirclePageIndicator.onPageSelected(0);
+
             //ViewPager监听事件
-            mVpTopNews.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            mCirclePageIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
