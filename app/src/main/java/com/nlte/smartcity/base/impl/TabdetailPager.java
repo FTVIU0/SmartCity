@@ -62,13 +62,19 @@ public class TabdetailPager extends BaseMenuDetailPager {
     public View initView() {
         View view = View.inflate(mActivity, R.layout.pager_tab_detail, null);
         ViewUtils.inject(this, view);
+
+        //加载头条新闻布局
+        View headView = View.inflate(mActivity, R.layout.list_header, null);
+        //必须将头条布局也注入到xutils中，才能初始化Viewpager对象
+        ViewUtils.inject(this, headView);
+        //将头条新闻以布局的方式添加到listview中，作为listview的一份子, 以实现上下滑动
+        mLvNews.addHeaderView(headView);
         return view;
     }
 
     @Override
     public void initData() {
         //从服务器获取数据
-        //mView.setText(mNewsTabData.title);
         //读缓存
         String cache = CacheUtils.getCache(mActivity, mUrl);
         if (!TextUtils.isEmpty(cache)){
