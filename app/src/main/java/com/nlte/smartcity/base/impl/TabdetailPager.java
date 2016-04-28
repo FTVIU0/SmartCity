@@ -69,6 +69,12 @@ public class TabdetailPager extends BaseMenuDetailPager {
         ViewUtils.inject(this, headView);
         //将头条新闻以布局的方式添加到listview中，作为listview的一份子, 以实现上下滑动
         mLvNews.addHeaderView(headView);
+        mLvNews.setOnRefreshListener(new RefreshListView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getDataFromService();
+            }
+        });
         return view;
     }
 
@@ -95,6 +101,9 @@ public class TabdetailPager extends BaseMenuDetailPager {
                 CacheUtils.setCache(mActivity, mUrl, result);
                 //解析数据
                 processData(result);
+
+                //收回下拉刷新控件
+                mLvNews.onRefreshComplete(true);
             }
 
             //请求失败
@@ -102,6 +111,8 @@ public class TabdetailPager extends BaseMenuDetailPager {
             public void onFailure(HttpException error, String msg) {
                 error.printStackTrace();
                 ToastUtil.show(mActivity, msg);
+                //收回下拉刷新控件
+                mLvNews.onRefreshComplete(false);//更新数据失败不刷新时间
             }
         });
     }

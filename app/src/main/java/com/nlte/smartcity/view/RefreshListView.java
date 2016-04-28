@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.nlte.smartcity.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * 功能描述：自定义下拉刷新listview
  *
@@ -27,6 +30,8 @@ public class RefreshListView extends ListView {
     private static final int STATE_PULL_TO_REFRESH = 1;//下拉刷新
     private static final int STATE_RELEASE_TO_REFRESH = 2;//松开刷新
     private static final int STATE_REFRESHING = 3;//正在刷新
+
+    private OnRefreshListener mListener;
 
     private int mCurrentState = STATE_PULL_TO_REFRESH;//当前默认状态
     private TextView mTvTile;
@@ -68,6 +73,9 @@ public class RefreshListView extends ListView {
         //获取测量后的高度
         mHeadViewHeidht = mView.getMeasuredHeight();
         mView.setPadding(0, -mHeadViewHeidht, 0, 0);
+
+        //刷新时间
+        setRefreshTime();
         //初始化箭头动画
         initArrowAnim();
     }
@@ -114,6 +122,10 @@ public class RefreshListView extends ListView {
                     //完整展示
                     mView.setPadding(0, 0, 0, 0);
                     refreshState();
+                    //回调下拉刷新接口
+                    if (mListener != null){
+                        mListener.onRefresh();
+                    }
                 }else if (mCurrentState == STATE_PULL_TO_REFRESH){
                     //隐藏控件
                     mView.setPadding(0, -mHeadViewHeidht, 0, 0);
@@ -165,5 +177,38 @@ public class RefreshListView extends ListView {
         mRotateAnimationDown.setFillAfter(true);//保持动画结束后的状态
 
 
+    }
+
+    /*下拉刷新回调接口*/
+    public interface OnRefreshListener {
+        //下拉刷新回调
+        public void onRefresh();
+    }
+
+    public void setOnRefreshListener(OnRefreshListener listener){
+        mListener = listener;
+    }
+
+    //收回下拉刷新控件
+    public void onRefreshComplete(boolean success){
+        //隐藏控件
+        mView.setPadding(0, -mHeadViewHeidht, 0, 0);
+
+        //设置为默认的下拉刷新
+        mCurrentState = STATE_PULL_TO_REFRESH;
+        mTvTile.setText("下拉刷新");
+        mPbLoading.setVisibility(INVISIBLE);
+        mIvIcon.startAnimation(mRotateAnimationDown);
+
+        if (success){
+            //刷新时间
+            setRefreshTime();
+        }
+    }
+
+    private void setRefreshTime() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//H大写表示24小时制。小写为12小时制
+        String time = format.format(new Date());
+        mTvTime.setText(time);
     }
 }
