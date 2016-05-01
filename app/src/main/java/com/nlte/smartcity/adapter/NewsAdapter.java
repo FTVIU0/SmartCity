@@ -1,6 +1,7 @@
 package com.nlte.smartcity.adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.BitmapUtils;
 import com.nlte.smartcity.R;
 import com.nlte.smartcity.domain.NewsBean;
+import com.nlte.smartcity.utils.SharePreferenceUtil;
 
 import java.util.ArrayList;
 
@@ -66,6 +68,16 @@ public class NewsAdapter extends BaseAdapter{
         mBitmapUtils.configDefaultLoadingImage(R.drawable.news_pic_default);
         holder.tvTitle.setText(news.title);
         holder.tvTime.setText(news.pubdate);
+
+        //判断已读未读
+        String readIds = SharePreferenceUtil.getString(mActivity, "read_ids", "");
+        if (readIds.contains(news.id)){
+            //标题置灰色
+            holder.tvTitle.setTextColor(Color.GRAY);
+        }else {
+            //标题置黑
+            holder.tvTitle.setTextColor(Color.BLACK);
+        }
         return convertView;
     }
     static class ViewHolder{

@@ -1,9 +1,11 @@
 package com.nlte.smartcity.base.impl;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -22,6 +24,7 @@ import com.nlte.smartcity.domain.NewsBean;
 import com.nlte.smartcity.domain.NewsMenuBean;
 import com.nlte.smartcity.global.GlobalConstants;
 import com.nlte.smartcity.utils.CacheUtils;
+import com.nlte.smartcity.utils.SharePreferenceUtil;
 import com.nlte.smartcity.utils.ToastUtil;
 import com.nlte.smartcity.view.HorizonScrollViewPager;
 import com.nlte.smartcity.view.RefreshListView;
@@ -69,10 +72,34 @@ public class TabdetailPager extends BaseMenuDetailPager {
         ViewUtils.inject(this, headView);
         //将头条新闻以布局的方式添加到listview中，作为listview的一份子, 以实现上下滑动
         mLvNews.addHeaderView(headView);
+
         mLvNews.setOnRefreshListener(new RefreshListView.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 getDataFromService();
+            }
+        });
+
+        System.out.println("123654789");
+        //ListView点击事件
+        mLvNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println(position);
+                NewsBean.News news = mNewsList.get(position);
+                //标记已读状态，将新闻的ID保存在sp中
+                String readIds = SharePreferenceUtil.getString(mActivity, "read_ids", "");
+                if (!readIds.contains(news.id)){//判断是否存在ID
+                    readIds = readIds + news.id+",";//将已读新闻ID追加到已读IDS中
+                    SharePreferenceUtil.putString(mActivity, "read_ids", readIds);
+                }
+                //全局刷新LIstView全部更新已读状态，比较耗性能
+                //mNewsAdapter.notifyDataSetChanged();
+
+                //局部刷新Listview，性能更佳
+                TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
+                tvTitle.setTextColor(Color.GRAY);
+
             }
         });
         return view;

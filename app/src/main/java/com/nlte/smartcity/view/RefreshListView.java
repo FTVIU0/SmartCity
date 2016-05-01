@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -22,9 +23,9 @@ import java.util.Date;
  * @author NLTE
  * @time 2016/4/27 0027 15:00
  */
-public class RefreshListView extends ListView {
+public class RefreshListView extends ListView implements AdapterView.OnItemClickListener{
 
-    private View mView;
+    private View mHeaderView;
     private int mStartY = -1;
     private int mHeadViewHeidht;
     private static final int STATE_PULL_TO_REFRESH = 1;//下拉刷新
@@ -41,38 +42,53 @@ public class RefreshListView extends ListView {
     //箭头动画
     private RotateAnimation mRotateAnimationUp;
     private RotateAnimation mRotateAnimationDown;
+    private View mFooterView;
+    private int mFooterViewHeight;
 
     public RefreshListView(Context context) {
         super(context);
-        initView();
+        initHeaderView();
+        initFooterView();
     }
 
     public RefreshListView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initView();
+        initHeaderView();
+        initFooterView();
     }
 
     public RefreshListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView();
+        initHeaderView();
+        initFooterView();
     }
 
-    private void initView() {
-        mView = View.inflate(getContext(), R.layout.pull_to_refresh_header, null);
-        this.addHeaderView(mView);//给listview添加头布局
+    //初始化脚布局
+    private void initFooterView(){
+        mFooterView = View.inflate(getContext(), R.layout.pull_to_refresh_footer, null);
+        this.addFooterView(mFooterView);
+        //隐藏布局
+        mFooterView.measure(0, 0);
+        mFooterViewHeight = mFooterView.getMeasuredHeight();
+        mFooterView.setPadding(0, - mFooterViewHeight, 0, 0);
+    }
+    //初始化头布局
+    private void initHeaderView() {
+        mHeaderView = View.inflate(getContext(), R.layout.pull_to_refresh_header, null);
+        this.addHeaderView(mHeaderView);//给listview添加头布局
 
-        mTvTile = (TextView)mView.findViewById(R.id.tv_title);
-        mTvTime = (TextView)mView.findViewById(R.id.tv_time);
-        mIvIcon = (ImageView) mView.findViewById(R.id.iv_icon);
-        mPbLoading = (ProgressBar)mView.findViewById(R.id.pb_loading);
+        mTvTile = (TextView) mHeaderView.findViewById(R.id.tv_title);
+        mTvTime = (TextView) mHeaderView.findViewById(R.id.tv_time);
+        mIvIcon = (ImageView) mHeaderView.findViewById(R.id.iv_icon);
+        mPbLoading = (ProgressBar) mHeaderView.findViewById(R.id.pb_loading);
 
 
         //隐藏listview头布局
         //通过设置负的内边距，从而布局往上走
-        mView.measure(0, 0);//手动测量布局宽高，具体宽高由系统决定
+        mHeaderView.measure(0, 0);//手动测量布局宽高，具体宽高由系统决定
         //获取测量后的高度
-        mHeadViewHeidht = mView.getMeasuredHeight();
-        mView.setPadding(0, -mHeadViewHeidht, 0, 0);
+        mHeadViewHeidht = mHeaderView.getMeasuredHeight();
+        mHeaderView.setPadding(0, -mHeadViewHeidht, 0, 0);
 
         //刷新时间
         setRefreshTime();
@@ -111,7 +127,7 @@ public class RefreshListView extends ListView {
                         refreshState();//刷新控件
                     }
 
-                    mView.setPadding(0, paddingTop, 0, 0);
+                    mHeaderView.setPadding(0, paddingTop, 0, 0);
                     return true;//消费此次事件
                 }
                 break;
@@ -120,7 +136,7 @@ public class RefreshListView extends ListView {
                 if (mCurrentState == STATE_RELEASE_TO_REFRESH){//如果是松开刷新状态，要切换为正在涮新
                     mCurrentState = STATE_REFRESHING;
                     //完整展示
-                    mView.setPadding(0, 0, 0, 0);
+                    mHeaderView.setPadding(0, 0, 0, 0);
                     refreshState();
                     //回调下拉刷新接口
                     if (mListener != null){
@@ -128,7 +144,7 @@ public class RefreshListView extends ListView {
                     }
                 }else if (mCurrentState == STATE_PULL_TO_REFRESH){
                     //隐藏控件
-                    mView.setPadding(0, -mHeadViewHeidht, 0, 0);
+                    mHeaderView.setPadding(0, -mHeadViewHeidht, 0, 0);
                 }
                 break;
         }
@@ -189,10 +205,10 @@ public class RefreshListView extends ListView {
         mListener = listener;
     }
 
-    //收回下拉刷新控件
+    //刷新结束
     public void onRefreshComplete(boolean success){
         //隐藏控件
-        mView.setPadding(0, -mHeadViewHeidht, 0, 0);
+        mHeaderView.setPadding(0, -mHeadViewHeidht, 0, 0);
 
         //设置为默认的下拉刷新
         mCurrentState = STATE_PULL_TO_REFRESH;
@@ -210,5 +226,21 @@ public class RefreshListView extends ListView {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//H大写表示24小时制。小写为12小时制
         String time = format.format(new Date());
         mTvTime.setText(time);
+    }
+
+    /*偷梁换柱*/
+    private OnItemClickListener mItemClickListener;
+    @Override
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mItemClickListener = listener;
+        super.setOnItemClickListener(this);//给当前控件设置点击事件（自己给自己设置点击事件）
+    }
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //通知前端界面item被点击事件，回调
+        if (mItemClickListener != null){
+            //将头布局的个数减掉后回调给前端界面
+            mItemClickListener.onItemClick(parent, view, position-getHeaderViewsCount(), id);
+        }
     }
 }
